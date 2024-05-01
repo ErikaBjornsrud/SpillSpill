@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="react.css">
+  <title>Reaksjonstid Spill</title>
+</head>
+
+<body>
+  <div class="slutt">
+    <div class="container">
+      <h1>Reaksjonstid Test</h1>
+      <div class="gjennomsnittlig_rt">Gjennomsnittlig score: 500 ms</div>
+      <div class="reaksjonstest_resultat_p">500 ms</div>
+      <button class="spilligjen_button">SPILL IGJEN</button>
+    </div>
+  </div>
+
+  <div class="start aktiv">
+    <div class="container">
+      <h1>Reaksjonstid Test</h1>
+      <p>Klikk på skjermen så fort den blir grønn!</p>
+      <p>Klikk hvor som helst for å starte reaksjonstesten.</p>
+    </div>
+  </div>
+
+  <div class="klikkbart_omrode">
+    <div class="melding">Klikk nå!</div>
+  </div>
+
+  <audio src="bakgrunnsmusikk.mp3" loop autoplay id="minBakgrunnsmusikk"></audio>
+  <button id="musikk_button" onclick="AvPaaMusikk()">Musikk: Av</button>
+
+  <script src="react.js"></script>
+
+</body>
+
+</html>
