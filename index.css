@@ -27,3 +27,15 @@ h1 {
     width: 400px;
     height: 190px;
 }
+#spill_container video {
+    width: 400px;
+    height: 190px;
+}
+
+.aktiv {
+    display: flex;
+}
+
+.uaktiv {
+    display: none;
+}
