@@ -5,10 +5,9 @@ const vid = document.querySelector(".vid")
 stickhero.addEventListener("mouseover", hover())
 
 function hover() {
-    img.classList.remove("aktiv")
-    img.classList.add("uaktiv")
-    vid.classList.remove("uaktiv")
-    vid.classList.add("aktiv")
+    document.body.style.backgroundColor = "red"
+    img.classList.add("hidden")
+    vid.classList.remove("hidden")
 }
 
 

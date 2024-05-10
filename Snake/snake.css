@@ -1,0 +1,16 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+#snake {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+#spill_info {
+    padding: 20px;
+    height: 460px;
+    background-color: aliceblue;
+}

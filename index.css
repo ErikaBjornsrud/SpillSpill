@@ -30,12 +30,9 @@ h1 {
 #spill_container video {
     width: 400px;
     height: 190px;
+    border: solid 5px black;
 }
 
-.aktiv {
-    display: flex;
-}
-
-.uaktiv {
+.hidden {
     display: none;
 }
