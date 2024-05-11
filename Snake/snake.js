@@ -22,18 +22,25 @@ var foodY;
 
 var gameOver = false;
 
-const play = document.getElementById("play");
+// Default settings?
+board = document.getElementById("board");
+board.height = rows * blockSize;
+board.width = cols * blockSize;
+context = board.getContext("2d"); //used for drawing on the board
 
-play.addEventListener("click", start);
+context.fillStyle = "black";
+context.fillRect(0, 0, board.width, board.height);
+context.font = "bold 48px Arial";
+context.fillStyle = "red";
+context.fillText("PRESS PLAY!", 90, 250)
+
+board.addEventListener("click", start)
+
+
+// LEGGE TIL EN FELLES HIGHSCORE?
 
 function start() {
-    board = document.getElementById("board");
-    board.height = rows * blockSize;
-    board.width = cols * blockSize;
-    context = board.getContext("2d"); //used for drawing on the board
-
     // Resetter spillerinformasjon 
-    play.innerHTML = "Spill igjen!";
     score_counter = -1;
     gameOver = false;
     snakeBody = [];
@@ -81,14 +88,14 @@ function update() {
     //game over conditions
     if (snakeX < 0 || snakeX > cols * blockSize || snakeY < 0 || snakeY > rows * blockSize) {
         gameOver = true;
-        gameOver();
+        theEnd();
         clearInterval(spill_interval)
     }
 
     for (let i = 0; i < snakeBody.length; i++) {
         if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) {
             gameOver = true;
-            gameOver();
+            theEnd();
             clearInterval(spill_interval)
         }
     }
@@ -135,8 +142,8 @@ function placeFood() {
     highscore_output.innerHTML = "Highscore:  " + highscore;
 }
 
-function gameOver() {
-    context.font = "bold 48px Arial"
+function theEnd() {
+    context.font = "bold 48px Arial";
     context.fillStyle = "red";
-    context.fillText("GAME OVER", 10, 80)
+    context.fillText("GAME OVER", 100, 250);
 }

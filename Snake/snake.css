@@ -12,5 +12,6 @@ body {
 #spill_info {
     padding: 20px;
     height: 460px;
+    width: 150px;
     background-color: aliceblue;
 }
