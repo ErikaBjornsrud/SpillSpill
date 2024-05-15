@@ -1,5 +1,3 @@
-// https://github.com/ImKennyYip/snake/tree/master
-
 //board
 var blockSize = 25;
 var rows = 20;
@@ -34,6 +32,9 @@ context.font = "bold 48px Arial";
 context.fillStyle = "red";
 context.fillText("PRESS TO PLAY!", 50, 250)
 
+spill_interval = setInterval(update, 100); //100 ms
+clearInterval(spill_interval)
+
 board.addEventListener("click", start)
 
 
@@ -51,11 +52,13 @@ function start() {
 
     placeFood();
     document.addEventListener("keyup", changeDirection);
-    spill_interval = setInterval(update, 100); //100 milliseconds
+    clearInterval(spill_interval)
+    spill_interval = setInterval(update, 100); //100 ms
 }
 
 function update() {
     if (gameOver) {
+        clearInterval(spill_interval)
         return;
     }
 
@@ -90,6 +93,9 @@ function update() {
         gameOver = true;
         theEnd();
         clearInterval(spill_interval)
+        if (highscore > APIhighscore) {
+            postHighscore(highscore)
+        }
     }
 
     for (let i = 0; i < snakeBody.length; i++) {
@@ -97,6 +103,9 @@ function update() {
             gameOver = true;
             theEnd();
             clearInterval(spill_interval)
+            if (highscore > APIhighscore) {
+                postHighscore(highscore)
+            }
         }
     }
 }
@@ -123,9 +132,11 @@ function changeDirection(e) {
 // Scores, definitions 
 const score_output = document.getElementById("score");
 const highscore_output = document.getElementById("highscore");
+const global_highscore_output = document.getElementById("global_highscore");
 let score_counter = -1;
-let highscore = 0;
+let highscore = localStorage.getItem("highscore") || 0;
 let newhighscore = false;
+getHighscore()
 
 function placeFood() {
     //(0-1) * cols -> (0-19.9999) -> (0-19) * 25
@@ -138,9 +149,11 @@ function placeFood() {
     if (score_counter > highscore) {
         highscore = score_counter;
         newhighscore = true;
+        localStorage.setItem("highscore", highscore);
     }
     score_output.innerHTML = "Score:  " + score_counter;
     highscore_output.innerHTML = "Highscore:  " + highscore;
+    global_highscore_output.innerHTML = "Global Highscore:  " + APIhighscore;
 }
 
 function theEnd() {
