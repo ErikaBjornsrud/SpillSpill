@@ -3,6 +3,11 @@
     font-family: "Roboto", sans-serif;
 }
 
+body {
+    background-image: url(https://i.pinimg.com/originals/38/92/dd/3892ddc66d8112551b93a9abf4e53d17.jpg);
+    background-size: cover;
+}
+
 h1 {
     text-align: center;
     font-size: 100px;

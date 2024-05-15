@@ -32,7 +32,7 @@ context.fillStyle = "black";
 context.fillRect(0, 0, board.width, board.height);
 context.font = "bold 48px Arial";
 context.fillStyle = "red";
-context.fillText("PRESS PLAY!", 90, 250)
+context.fillText("PRESS TO PLAY!", 50, 250)
 
 board.addEventListener("click", start)
 
@@ -120,6 +120,7 @@ function changeDirection(e) {
     }
 }
 
+// Scores, definitions 
 const score_output = document.getElementById("score");
 const highscore_output = document.getElementById("highscore");
 let score_counter = -1;
