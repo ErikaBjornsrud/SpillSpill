@@ -21,23 +21,19 @@ h1 {
     margin-bottom: 50px;
 }
 
+main {
+    width: 600px;
+    margin: auto;
+}
 #spill_container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 250px;
 }
-#spill_container img {
-    width: 400px;
-    height: 190px;
+#spill_container a {
+    color: white;
+    margin-top: 20px;
 }
-#spill_container video {
-    width: 400px;
-    height: 190px;
-    border: solid 5px black;
-}
-
-.hidden {
-    display: none;
+#video {
+    background-color: black;
 }
