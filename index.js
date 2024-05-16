@@ -1,16 +1,14 @@
-const stickhero = document.getElementById("stickhero")
-const img = document.querySelector(".img")
-const vid = document.querySelector(".vid")
+const vid = document.getElementById("video")
 
-stickhero.addEventListener("mouseover", hover())
-
-function hover() {
-    document.body.style.backgroundColor = "red"
-    img.classList.add("hidden")
-    vid.classList.remove("hidden")
-}
+const snake_hover = document.getElementById("snake_hover")
+const react_hover = document.getElementById("react_hover")
 
 
-const react = document.getElementById("react")
+const tv = document.getElementById("TV")
 
+
+tv.addEventListener("click", function () {
+    react_hover.style.color = "black"
+    tv.style.backgroundColor = "blue"
+})
 
