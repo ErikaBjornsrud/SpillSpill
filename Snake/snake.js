@@ -1,24 +1,24 @@
 //board
-var blockSize = 25;
-var rows = 20;
-var cols = 20;
-var board;
-var context;
+let blockSize = 25;
+let rows = 20;
+let cols = 20;
+let board;
+let context;
 
 //snake head
-var snakeX = blockSize * 5;
-var snakeY = blockSize * 5;
+let snakeX = blockSize * 5;
+let snakeY = blockSize * 5;
 
-var velocityX = 0;
-var velocityY = 0;
+let velocityX = 0;
+let velocityY = 0;
 
-var snakeBody = [];
+let snakeBody = [];
 
 //food
-var foodX;
-var foodY;
+let foodX;
+let foodY;
 
-var gameOver = false;
+let gameOver = false;
 
 // Default settings?
 board = document.getElementById("board");
@@ -36,9 +36,6 @@ spill_interval = setInterval(update, 100); //100 ms
 clearInterval(spill_interval)
 
 board.addEventListener("click", start)
-
-
-// LEGGE TIL EN FELLES HIGHSCORE?
 
 function start() {
     // Resetter spillerinformasjon 
@@ -59,6 +56,7 @@ function start() {
 function update() {
     if (gameOver) {
         clearInterval(spill_interval)
+        theEnd();
         return;
     }
 
@@ -134,7 +132,7 @@ const score_output = document.getElementById("score");
 const highscore_output = document.getElementById("highscore");
 const global_highscore_output = document.getElementById("global_highscore");
 let score_counter = -1;
-let highscore = localStorage.getItem("highscore") || 0;
+let highscore = localStorage.getItem("highscore_snake") || 0;
 let newhighscore = false;
 getHighscore()
 
@@ -149,7 +147,7 @@ function placeFood() {
     if (score_counter > highscore) {
         highscore = score_counter;
         newhighscore = true;
-        localStorage.setItem("highscore", highscore);
+        localStorage.setItem("highscore_snake", highscore);
     }
     score_output.innerHTML = "Score:  " + score_counter;
     highscore_output.innerHTML = "Highscore:  " + highscore;

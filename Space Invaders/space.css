@@ -1,0 +1,36 @@
+canvas {
+    border: solid 5px purple;
+}
+
+#space {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+#spill_info {
+    padding: 10px;
+    height: 500px;
+    width: 150px;
+    background-color: purple;
+    border: solid 5px purple;
+}
+
+#spill_info h1 {
+    line-height: 25px;
+}
+
+#overskrift {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-left: 30px;
+}
+
+#space_overskrift {
+    font-size: 30px;
+}
+
+#invaders_overskrift {
+    font-size: small;
+}

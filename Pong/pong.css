@@ -1,21 +1,28 @@
+#board {
+    background-color: black;
+    border-top: 5px solid skyblue;
+    border-bottom: 5px solid skyblue;
+}
+
 canvas {
     border: solid 5px purple;
 }
 
-#snake {
+#pong {
     display: flex;
     justify-content: center;
     margin-top: 50px;
 }
 
-#spill_info {
+#overskrift {
     padding: 20px;
     height: 460px;
     width: 150px;
     background-color: purple;
     border: solid 5px purple;
+    font-size: xx-large;
 }
 
-#spill_info h1 {
-    line-height: 20px;
+#overskrift h1 {
+    line-height: 50px;
 }

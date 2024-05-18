@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" , content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="space.css">
+    <link rel="stylesheet" href="../generelt.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+    <div id="space">
+        <div id="spill_info">
+            <div id="overskrift">
+                <div id="space_overskrift">
+                    <h1>S</h1>
+                    <h1>P</h1>
+                    <h1>A</h1>
+                    <h1>C</h1>
+                    <h1>E</h1>
+                </div>
+                <div id="invaders_overskrift">
+                    <h1>I</h1>
+                    <h1>N</h1>
+                    <h1>V</h1>
+                    <h1>A</h1>
+                    <h1>D</h1>
+                    <h1>E</h1>
+                    <h1>R</h1>
+                    <h1>S</h1>
+                </div>
+            </div>
+            <p id="highscore"></p>
+            <p id="global_highscore"></p>
+        </div>
+        <canvas id="board"></canvas>
+    </div>
+    <a id="tilbakeknapp" href="../index.html"><i class="fa-solid fa-arrow-left-long"></i> TILBAKE</a>
+    <script src="../API.js"></script>
+    <script src="space.js"></script>
+</body>
+
+</html>
