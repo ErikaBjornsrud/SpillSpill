@@ -47,11 +47,11 @@ function out(outElm) {
 // Video functions 
 
 function snakeVideo() {
-    document.getElementById("video").src = "Bilder og videoer/stickhero.mp4"
+    document.getElementById("video").src = "Videoer/snake.mp4"
 }
 function spaceVideo() {
-    document.getElementById("video").src = "Bilder og videoer/React.mp4"
+    document.getElementById("video").src = "Videoer/stickhero.mp4"
 }
 function pongVideo() {
-    document.getElementById("video").src = "Bilder og videoer/React.mp4"
+    document.getElementById("video").src = "Videoer/pong.mp4"
 }

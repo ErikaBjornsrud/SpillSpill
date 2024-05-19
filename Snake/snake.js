@@ -5,7 +5,7 @@ let cols = 20;
 let board;
 let context;
 
-//snake head
+//snake 
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
@@ -20,7 +20,7 @@ let foodY;
 
 let gameOver = false;
 
-// Default settings?
+// Default settings
 board = document.getElementById("board");
 board.height = rows * blockSize;
 board.width = cols * blockSize;
@@ -31,6 +31,9 @@ context.fillRect(0, 0, board.width, board.height);
 context.font = "bold 48px Arial";
 context.fillStyle = "red";
 context.fillText("PRESS TO PLAY!", 50, 250)
+context.font = "20px Arial";
+context.fillText("You move around with the arrow keys", 80, 350)
+context.fillText("The more apples you eat, the longer the snake grows!", 10, 400)
 
 spill_interval = setInterval(update, 100); //100 ms
 clearInterval(spill_interval)

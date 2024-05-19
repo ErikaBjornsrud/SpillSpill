@@ -40,11 +40,34 @@ let ball = {
 let player1Score = 0;
 let player2Score = 0;
 
-window.onload = function () {
-    board = document.getElementById("board");
-    board.height = boardHeight;
-    board.width = boardWidth;
-    context = board.getContext("2d"); //used for drawing on the board
+
+board = document.getElementById("board");
+board.height = boardHeight;
+board.width = boardWidth;
+context = board.getContext("2d"); //used for drawing on the board
+
+context.font = "bold 48px Arial";
+context.fillStyle = "skyblue";
+context.fillText("PRESS TO PLAY!", 50, 250)
+context.font = "20px Arial";
+context.fillText("player 1 moves up with W and down with S", 50, 350)
+context.fillText("player 2 moves up and down with the arrow keys", 30, 400)
+context.font = ("bold 20px Arial")
+context.fillText("The first player who reach 10 points wins!", 45, 450)
+
+board.addEventListener("click", start)
+
+function start() {
+    // default settings
+    gameOver = false;
+    player1Score = 0;
+    player2Score = 0;
+    player1.y = boardHeight / 2;
+    player2.y = boardHeight / 2;
+    player1.velocityY = 0;
+    player2.velocityY = 0;
+    ball.velocityX = 1;
+    ball.velocityY = 2;
 
     //draw initial player1
     context.fillStyle = "skyblue";
@@ -55,6 +78,11 @@ window.onload = function () {
 }
 
 function update() {
+    if (gameOver) {
+        theEnd()
+        return;
+    }
+
     requestAnimationFrame(update);
     context.clearRect(0, 0, board.width, board.height);
 
@@ -84,26 +112,20 @@ function update() {
     if (ball.y <= 0 || (ball.y + ballHeight >= boardHeight)) {
         // if ball touches top or bottom of canvas
         ball.velocityY *= -1; //reverse direction
+        increaseBallSpeed();
     }
-
-    // if (ball.y <= 0) { 
-    //     // if ball touches top of canvas
-    //     ball.velocityY = 2; //go down
-    // }
-    // else if (ball.y + ballHeight >= boardHeight) {
-    //     // if ball touches bottom of canvas
-    //     ball.velocityY = -2; //go up
-    // }
 
     //bounce the ball back
     if (detectCollision(ball, player1)) {
         if (ball.x <= player1.x + player1.width) { //left side of ball touches right side of player 1 (left paddle)
             ball.velocityX *= -1;   // flip x direction
+            increaseBallSpeed();
         }
     }
     else if (detectCollision(ball, player2)) {
         if (ball.x + ballWidth >= player2.x) { //right side of ball touches left side of player 2 (right paddle)
             ball.velocityX *= -1;   // flip x direction
+            increaseBallSpeed();
         }
     }
 
@@ -121,6 +143,21 @@ function update() {
     context.font = "45px sans-serif";
     context.fillText(player1Score, boardWidth / 5, 45);
     context.fillText(player2Score, boardWidth * 4 / 5 - 45, 45);
+
+    if (player1Score === 10) {
+        context.font = "bold 48px Arial";
+        context.fillStyle = "green";
+        context.fillText("SPILLER 1", 120, 300);
+        context.fillText("HAR VUNNET", 80, 350);
+        gameOver = true;
+    }
+    if (player2Score === 10) {
+        context.font = "bold 48px Arial";
+        context.fillStyle = "green";
+        context.fillText("SPILLER 2", 120, 300);
+        context.fillText("HAR VUNNET", 80, 350);
+        gameOver = true;
+    }
 
     // draw dotted line down the middle
     for (let i = 10; i < board.height; i += 25) { //i = starting y Position, draw a square every 25 pixels down
@@ -151,6 +188,21 @@ function movePlayer(e) {
     }
 }
 
+function increaseBallSpeed() {
+    if (ball.velocityX > 0) {
+        ball.velocityX += 0.05;
+    }
+    else {
+        ball.velocityX -= 0.05;
+    }
+    if (ball.velocityY > 0) {
+        ball.velocityY += 0.05;
+    }
+    else {
+        ball.velocityY -= 0.05;
+    }
+}
+
 function detectCollision(a, b) {
     return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
         a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
@@ -167,4 +219,11 @@ function resetGame(direction) {
         velocityX: direction,
         velocityY: 2
     }
+}
+
+function theEnd() {
+    context.font = "bold 48px Arial";
+    context.fillStyle = "red";
+    context.fillText("GAME OVER", 100, 200);
+    addEventListener("click", start)
 }
