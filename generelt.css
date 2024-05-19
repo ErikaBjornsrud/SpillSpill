@@ -18,9 +18,11 @@ body {
     font-size: 17px;
     font-weight: bold;
 }
+
 #tilbakeknapp i {
     font-size: larger;
 }
+
 #tilbakeknapp:hover {
     color: purple;
 }

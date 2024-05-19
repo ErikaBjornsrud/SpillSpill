@@ -1,10 +1,10 @@
-//board
+//brettet 
 let board;
 let boardWidth = 500;
 let boardHeight = 500;
 let context;
 
-//players
+//spillere
 let playerWidth = 10;
 let playerHeight = 50;
 let playerVelocityY = 0;
@@ -41,11 +41,13 @@ let player1Score = 0;
 let player2Score = 0;
 
 
+//generelt 
 board = document.getElementById("board");
 board.height = boardHeight;
 board.width = boardWidth;
-context = board.getContext("2d"); //used for drawing on the board
+context = board.getContext("2d"); //for å tegne på brettet 
 
+//start "siden"
 context.font = "bold 48px Arial";
 context.fillStyle = "skyblue";
 context.fillText("PRESS TO PLAY!", 50, 250)
@@ -55,6 +57,7 @@ context.fillText("player 2 moves up and down with the arrow keys", 30, 400)
 context.font = ("bold 20px Arial")
 context.fillText("The first player who reach 10 points wins!", 45, 450)
 
+//trykk for å starte
 board.addEventListener("click", start)
 
 function start() {
@@ -69,12 +72,12 @@ function start() {
     ball.velocityX = 1;
     ball.velocityY = 2;
 
-    //draw initial player1
+    //tegn spiller én 
     context.fillStyle = "skyblue";
     context.fillRect(player1.x, player1.y, playerWidth, playerHeight);
 
     requestAnimationFrame(update);
-    document.addEventListener("keyup", movePlayer);
+    document.addEventListener("keyup", movePlayer); //lytter etter tastaturtrykk 
 }
 
 function update() {
@@ -86,21 +89,21 @@ function update() {
     requestAnimationFrame(update);
     context.clearRect(0, 0, board.width, board.height);
 
-    // player1
+    // spiller én
     context.fillStyle = "skyblue";
     let nextPlayer1Y = player1.y + player1.velocityY;
     if (!outOfBounds(nextPlayer1Y)) {
         player1.y = nextPlayer1Y;
     }
-    // player1.y += player1.velocityY;
+    
     context.fillRect(player1.x, player1.y, playerWidth, playerHeight);
 
-    // player2
+    // spiller to
     let nextPlayer2Y = player2.y + player2.velocityY;
     if (!outOfBounds(nextPlayer2Y)) {
         player2.y = nextPlayer2Y;
     }
-    // player2.y += player2.velocityY;
+    
     context.fillRect(player2.x, player2.y, playerWidth, playerHeight);
 
     // ball
@@ -110,21 +113,21 @@ function update() {
     context.fillRect(ball.x, ball.y, ballWidth, ballHeight);
 
     if (ball.y <= 0 || (ball.y + ballHeight >= boardHeight)) {
-        // if ball touches top or bottom of canvas
-        ball.velocityY *= -1; //reverse direction
+        //hvis ballen treffer toppen eller bunnen av brettet
+        ball.velocityY *= -1; //endrer retning på ballen
         increaseBallSpeed();
     }
 
-    //bounce the ball back
+    //ballen spretter tilbake 
     if (detectCollision(ball, player1)) {
-        if (ball.x <= player1.x + player1.width) { //left side of ball touches right side of player 1 (left paddle)
-            ball.velocityX *= -1;   // flip x direction
+        if (ball.x <= player1.x + player1.width) { //ball treffer spiller én (med venstre side av ballen)
+            ball.velocityX *= -1;   //bytter ballens retning 
             increaseBallSpeed();
         }
     }
     else if (detectCollision(ball, player2)) {
-        if (ball.x + ballWidth >= player2.x) { //right side of ball touches left side of player 2 (right paddle)
-            ball.velocityX *= -1;   // flip x direction
+        if (ball.x + ballWidth >= player2.x) { //ball treffer spiller to (med høyre side av ballen)
+            ball.velocityX *= -1;   //bytter ballens retning 
             increaseBallSpeed();
         }
     }
@@ -139,11 +142,17 @@ function update() {
         resetGame(-1);
     }
 
+    // tegner skille på midten 
+    for (let i = 10; i < board.height; i += 25) { //i = startende y posisjon, tegner en firkant etter 25px med mellomrom 
+        context.fillRect(board.width / 2 - 10, i, 5, 5);
+    }
+
     //score
     context.font = "45px sans-serif";
     context.fillText(player1Score, boardWidth / 5, 45);
     context.fillText(player2Score, boardWidth * 4 / 5 - 45, 45);
 
+    //vinner betingelser 
     if (player1Score === 10) {
         context.font = "bold 48px Arial";
         context.fillStyle = "green";
@@ -158,20 +167,15 @@ function update() {
         context.fillText("HAR VUNNET", 80, 350);
         gameOver = true;
     }
-
-    // draw dotted line down the middle
-    for (let i = 10; i < board.height; i += 25) { //i = starting y Position, draw a square every 25 pixels down
-        // (x position = half of boardWidth (middle) - 10), i = y position, width = 5, height = 5
-        context.fillRect(board.width / 2 - 10, i, 5, 5);
-    }
 }
 
+//sjekker om spilleren er utenfor banen
 function outOfBounds(yPosition) {
     return (yPosition < 0 || yPosition + playerHeight > boardHeight);
 }
 
 function movePlayer(e) {
-    //player1
+    //spiller én
     if (e.code == "KeyW") {
         player1.velocityY = -3;
     }
@@ -179,7 +183,7 @@ function movePlayer(e) {
         player1.velocityY = 3;
     }
 
-    //player2
+    //spiller to
     if (e.code == "ArrowUp") {
         player2.velocityY = -3;
     }
@@ -188,6 +192,7 @@ function movePlayer(e) {
     }
 }
 
+//øker ballens fart etter hver kollisjon 
 function increaseBallSpeed() {
     if (ball.velocityX > 0) {
         ball.velocityX += 0.05;
@@ -204,12 +209,13 @@ function increaseBallSpeed() {
 }
 
 function detectCollision(a, b) {
-    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-        a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-        a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
-        a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+    return a.x < b.x + b.width &&   //a's øvre venstre hjørne når ikke b's øvre høyre hjørne
+        a.x + a.width > b.x &&   //a's øvre høyre hjørne passerer b's øverste venstre hjørne
+        a.y < b.y + b.height &&  //a's øvre venstre hjørne når ikke b's nedre venstre hjørne
+        a.y + a.height > b.y;    //a's nedre venstre hjørne passerer b's øvre venstre hjørne
 }
 
+//reseter ballen for hver gang noen har fått poeng 
 function resetGame(direction) {
     ball = {
         x: boardWidth / 2,

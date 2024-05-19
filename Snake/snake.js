@@ -1,4 +1,4 @@
-//board
+//brett
 let blockSize = 25;
 let rows = 20;
 let cols = 20;
@@ -14,18 +14,27 @@ let velocityY = 0;
 
 let snakeBody = [];
 
-//food
+//mat
 let foodX;
 let foodY;
 
-let gameOver = false;
+// Scores
+const score_output = document.getElementById("score");
+const highscore_output = document.getElementById("highscore");
+const global_highscore_output = document.getElementById("global_highscore");
+let score_counter = -1;
+let highscore = localStorage.getItem("highscore_snake") || 0;
+getHighscore()
 
-// Default settings
+//generelt
 board = document.getElementById("board");
 board.height = rows * blockSize;
 board.width = cols * blockSize;
-context = board.getContext("2d"); //used for drawing on the board
+context = board.getContext("2d"); 
 
+let gameOver = false;
+
+// start "side"
 context.fillStyle = "black";
 context.fillRect(0, 0, board.width, board.height);
 context.font = "bold 48px Arial";
@@ -58,22 +67,25 @@ function start() {
 
 function update() {
     if (gameOver) {
-        clearInterval(spill_interval)
         theEnd();
         return;
     }
 
+    //brett 
     context.fillStyle = "black";
     context.fillRect(0, 0, board.width, board.height);
 
+    //mat
     context.fillStyle = "red";
     context.fillRect(foodX, foodY, blockSize, blockSize);
 
+    //slangen spiser eple og blir større 
     if (snakeX == foodX && snakeY == foodY) {
         snakeBody.push([foodX, foodY]);
         placeFood();
     }
 
+    //slangens bevegelse / oppdaterte posisjon 
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = snakeBody[i - 1];
     }
@@ -81,6 +93,7 @@ function update() {
         snakeBody[0] = [snakeX, snakeY];
     }
 
+    //tegner slangen og oppdaterer posisjonen til slangens hode 
     context.fillStyle = "lime";
     snakeX += velocityX * blockSize;
     snakeY += velocityY * blockSize;
@@ -89,24 +102,16 @@ function update() {
         context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
     }
 
-    //game over conditions
+    //betingelsene for game over 
     if (snakeX < 0 || snakeX > cols * blockSize || snakeY < 0 || snakeY > rows * blockSize) {
         gameOver = true;
         theEnd();
-        clearInterval(spill_interval)
-        if (highscore > APIhighscore) {
-            postHighscore(highscore)
-        }
     }
 
     for (let i = 0; i < snakeBody.length; i++) {
         if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) {
             gameOver = true;
             theEnd();
-            clearInterval(spill_interval)
-            if (highscore > APIhighscore) {
-                postHighscore(highscore)
-            }
         }
     }
 }
@@ -130,26 +135,15 @@ function changeDirection(e) {
     }
 }
 
-// Scores, definitions 
-const score_output = document.getElementById("score");
-const highscore_output = document.getElementById("highscore");
-const global_highscore_output = document.getElementById("global_highscore");
-let score_counter = -1;
-let highscore = localStorage.getItem("highscore_snake") || 0;
-let newhighscore = false;
-getHighscore()
-
 function placeFood() {
     //(0-1) * cols -> (0-19.9999) -> (0-19) * 25
     foodX = Math.floor(Math.random() * cols) * blockSize;
     foodY = Math.floor(Math.random() * rows) * blockSize;
 
 
-    score_counter = score_counter + 1;
-    newhighscore = false;
+    score_counter += 1;
     if (score_counter > highscore) {
         highscore = score_counter;
-        newhighscore = true;
         localStorage.setItem("highscore_snake", highscore);
     }
     score_output.innerHTML = "Score:  " + score_counter;
@@ -161,4 +155,8 @@ function theEnd() {
     context.font = "bold 48px Arial";
     context.fillStyle = "red";
     context.fillText("GAME OVER", 100, 250);
+    clearInterval(spill_interval)
+    if (highscore > APIhighscore) {
+        postHighscore(highscore)
+    }
 }

@@ -1,4 +1,4 @@
-// Board settings
+//brett
 let tileSize = 32;
 let rows = 16;
 let columns = 16;
@@ -8,7 +8,7 @@ let boardWidth = tileSize * columns;
 let boardHeight = tileSize * rows;
 let context;
 
-// Ship settings
+//romskipet
 let shipWidth = tileSize * 2;
 let shipHeight = tileSize;
 let shipX = tileSize * columns / 2 - tileSize;
@@ -22,9 +22,9 @@ let ship = {
 };
 
 let shipImg;
-let shipVelocityX = tileSize; // Ship moving speed
+let shipVelocityX = tileSize; //skipets fart
 
-// Alien settings
+//alien 
 let alienArray = [];
 let alienWidth = tileSize * 2;
 let alienHeight = tileSize;
@@ -34,29 +34,31 @@ let alienImg;
 
 let alienRows = 2;
 let alienColumns = 3;
-let alienCount = 0; // Number of aliens to defeat
-let alienVelocityX = 1; // Alien moving speed
+let alienCount = 0; //antall aliens å bekjempe 
+let alienVelocityX = 1; //aliens fart 
 
-// Bullet settings
+//skudd
 let bulletArray = [];
-let bulletVelocityY = -10; // Bullet moving speed
+let bulletVelocityY = -10; //skuddenes fart
 
+//scores
 let score = 0;
 let highscore = localStorage.getItem("highscore_space") || 0;
 const highscore_output = document.getElementById("highscore");
 const global_highscore_output = document.getElementById("global_highscore");
 getHighscore();
 
+//generelt 
 let requestAnimationFrameID;
 let gameOver = false;
 
-initializeBoard();
+pressPlay();
 
-function initializeBoard() {
+function pressPlay() {
     board = document.getElementById("board");
     board.width = boardWidth;
     board.height = boardHeight;
-    context = board.getContext("2d"); // Used for drawing on the board
+    context = board.getContext("2d");
 
     context.fillStyle = "black";
     context.fillRect(0, 0, board.width, board.height);
@@ -73,7 +75,7 @@ function initializeBoard() {
 function start() {
     resetGame();
 
-    // Load images
+    //få tak i bildene 
     shipImg = new Image();
     shipImg.src = "./ship.png";
     shipImg.onload = function () {
@@ -116,21 +118,21 @@ function update() {
     context.fillStyle = "black";
     context.fillRect(0, 0, board.width, board.height);
 
-    // Draw ship
+    //tegn romskipet
     context.drawImage(shipImg, ship.x, ship.y, ship.width, ship.height);
 
-    // Move and draw aliens
+    //beveg og tegn aliens 
     for (let i = 0; i < alienArray.length; i++) {
         let alien = alienArray[i];
         if (alien.alive) {
             alien.x += alienVelocityX;
 
-            // If alien touches the borders
+            //hvis alien treffer veggene
             if (alien.x + alien.width >= board.width || alien.x <= 0) {
                 alienVelocityX *= -1;
                 alien.x += alienVelocityX * 2;
 
-                // Move all aliens down by one row
+                //dytt alle aliens ned en rad
                 for (let j = 0; j < alienArray.length; j++) {
                     alienArray[j].y += alienHeight;
                 }
@@ -144,14 +146,14 @@ function update() {
         }
     }
 
-    // Move and draw bullets
+    //beveg og tegn skudd
     for (let i = 0; i < bulletArray.length; i++) {
         let bullet = bulletArray[i];
         bullet.y += bulletVelocityY;
         context.fillStyle = "white";
         context.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 
-        // Bullet collision with aliens
+        //skudd treffer aliens
         for (let j = 0; j < alienArray.length; j++) {
             let alien = alienArray[j];
             if (!bullet.used && alien.alive && detectCollision(bullet, alien)) {
@@ -163,16 +165,16 @@ function update() {
         }
     }
 
-    // Clear used bullets
+    //fjern brukte skudd
     while (bulletArray.length > 0 && (bulletArray[0].used || bulletArray[0].y < 0)) {
         bulletArray.shift();
     }
 
-    // Next level
+    //neste level
     if (alienCount == 0) {
-        score += alienColumns * alienRows * 100; // Bonus points
-        alienColumns = Math.min(alienColumns + 1, columns / 2 - 2); // Cap at 6
-        alienRows = Math.min(alienRows + 1, rows - 4); // Cap at 12
+        score += alienColumns * alienRows * 100; //bonus poeng
+        alienColumns = Math.min(alienColumns + 1, columns / 2 - 2); //antall: 6
+        alienRows = Math.min(alienRows + 1, rows - 4); //antall: 12
         if (alienVelocityX > 0) {
             alienVelocityX += 0.2;
         } else {
@@ -181,7 +183,7 @@ function update() {
         createAliens();
     }
 
-    // Draw score
+    //tegn score
     context.fillStyle = "white";
     context.font = "16px courier";
     context.fillText(score, 5, 20);
@@ -199,14 +201,14 @@ function moveShip(e) {
     }
 
     if (e.code == "ArrowLeft" && ship.x - shipVelocityX >= 0) {
-        ship.x -= shipVelocityX; // Move left one tile
+        ship.x -= shipVelocityX; //flytt en til venstre 
     } else if (e.code == "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width) {
-        ship.x += shipVelocityX; // Move right one tile
+        ship.x += shipVelocityX; //flytt en til høyre
     }
 }
 
 function createAliens() {
-    alienArray = []; // Ensure alienArray is empty before creating new aliens
+    alienArray = []; //sørger for at alienarry er tom før vi lager flere aliens 
     for (let c = 0; c < alienColumns; c++) {
         for (let r = 0; r < alienRows; r++) {
             let alien = {
@@ -242,10 +244,10 @@ function shoot(e) {
 }
 
 function detectCollision(a, b) {
-    return a.x < b.x + b.width &&   // a's top left corner doesn't reach b's top right corner
-        a.x + a.width > b.x &&   // a's top right corner passes b's top left corner
-        a.y < b.y + b.height &&  // a's top left corner doesn't reach b's bottom left corner
-        a.y + a.height > b.y;    // a's bottom left corner passes b's top left corner
+    return a.x < b.x + b.width &&   //a's øvre venstre hjørne når ikke b's øvre høyre hjørne
+        a.x + a.width > b.x &&   //a's øvre høyre hjørne passerer b's øverste venstre hjørne
+        a.y < b.y + b.height &&  //a's øvre venstre hjørne når ikke b's nedre venstre hjørne
+        a.y + a.height > b.y;    //a's nedre venstre hjørne passerer b's øvre venstre hjørne
 }
 
 function theEnd() {

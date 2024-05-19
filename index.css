@@ -14,11 +14,13 @@ h1 {
     line-height: 0;
     padding-top: 40px;
 }
+
 #toppen p {
     max-width: 600px;
     margin: auto;
     text-align: center;
 }
+
 #toppen {
     margin-bottom: 40px;
     color: white;
@@ -28,11 +30,13 @@ main {
     width: 600px;
     margin: auto;
 }
+
 #spill_container {
     display: grid;
     grid-template-columns: 120px 1fr;
     grid-template-rows: 250px;
 }
+
 #games_container {
     display: flex;
     flex-direction: column;
@@ -40,6 +44,7 @@ main {
     margin-top: 15px;
     margin-right: 20px;
 }
+
 a {
     color: white;
     background-color: blueviolet;
@@ -48,6 +53,7 @@ a {
     font-weight: bolder;
     text-align: center;
 }
+
 #TV {
     background-color: black;
 }

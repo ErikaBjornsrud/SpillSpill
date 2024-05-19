@@ -44,5 +44,6 @@ async function postHighscore(highscore) {
 }
 
 
+
 // resethighscore 
 // postHighscore(1)
