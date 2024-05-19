@@ -1,5 +1,3 @@
-// const vid = document.getElementById("video").src;
-
 // Konstanter 
 const space_hover = document.getElementById("space_hover");
 const snake_hover = document.getElementById("snake_hover");
@@ -50,7 +48,7 @@ function snakeVideo() {
     document.getElementById("video").src = "Videoer/snake.mp4"
 }
 function spaceVideo() {
-    document.getElementById("video").src = "Videoer/stickhero.mp4"
+    document.getElementById("video").src = "Videoer/space.mp4"
 }
 function pongVideo() {
     document.getElementById("video").src = "Videoer/pong.mp4"

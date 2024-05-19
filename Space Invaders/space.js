@@ -45,7 +45,7 @@ let score = 0;
 let highscore = localStorage.getItem("highscore_space") || 0;
 const highscore_output = document.getElementById("highscore");
 const global_highscore_output = document.getElementById("global_highscore");
-getHighscore()
+getHighscore();
 
 let requestAnimationFrameID;
 let gameOver = false;
@@ -61,8 +61,11 @@ function initializeBoard() {
     context.fillStyle = "black";
     context.fillRect(0, 0, board.width, board.height);
     context.font = "bold 48px Arial";
-    context.fillStyle = "red";
+    context.fillStyle = "limegreen";
     context.fillText("PRESS TO PLAY!", 50, 250);
+    context.font = ("20px Arial")
+    context.fillText("Shoot aliens by pressing the space key", 80, 350)
+    context.fillText("and move to the left and right with the arrow keys", 40, 400)
 
     board.addEventListener("click", start);
 }
